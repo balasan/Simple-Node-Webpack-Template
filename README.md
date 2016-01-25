@@ -7,18 +7,22 @@ install dependencies:
 npm install
 ```
 
-run the app in dev mode  
-*all changes to the front-end code will be live-reloaded, but you have to restart the server if you make backend changes
+run the app in dev mode - launches server with nodemon and watches server files and hot-module-replaces frontend
+```
+npm run dev
+```
+
+default start (use NODE_ENV=production to test production build without hot-module replacement)
 ```
 npm start
 ```
 
-build for production (no source maps)
+build for production (no source maps, no hot-module-replacement)
 ```
 npm run build
 ```
 
-build app with source maps (usefull for debuggin production server)
+build app with source maps (useful for debuggin production build)
 ```
 npm run build-dev
 ```

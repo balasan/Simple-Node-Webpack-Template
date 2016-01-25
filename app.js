@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 //load .env config if its there
 require('dotenv').config({silent: true});
 
+
 var app = express();
 
 //environment variables
@@ -14,6 +15,13 @@ var app = express();
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
+
+if(process.env.USE_DB){
+  require('./server/db.connect');
+  if(process.env.SEED_DB){
+    require('./server/seed');
+  }
+}
 
 app.use(favicon(__dirname + '/public/img/favicon.ico'));
 
@@ -44,46 +52,8 @@ app.use(bodyParser.urlencoded({
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-//main route
-var routes = require('./routes/index');
-// var users = require('./routes/user');
-
-app.use('/', routes);
-// app.use('/users', users);
-
-/// error handlers
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err,
-            title: 'error'
-        });
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {},
-        title: 'error'
-    });
-});
+//load routes
+var routes = require('./server/routes')(app);
 
 app.set('port', process.env.PORT || 3000);
 
