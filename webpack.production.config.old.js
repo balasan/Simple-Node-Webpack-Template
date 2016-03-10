@@ -8,9 +8,9 @@ var autoprefixer = require('autoprefixer');
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 module.exports = {
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   entry: [
-    'webpack-hot-middleware/client?reload=true',
+    // 'webpack-hot-middleware/client',
     './public/js/index.js'
   ],
   output: {
@@ -35,9 +35,8 @@ module.exports = {
       {
         test: /\.css$|\.scss$/,
         loader: 'style-loader!css-loader!postcss-loader'
-        // loader: ExtractTextPlugin.extract('style-loader','css-loader!postcss-loader')
-        // loader: 'css?sourceMap!postcss!sass?sourceMap&sourceMapContents',
       },
+
     ]
   }
 }

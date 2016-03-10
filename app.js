@@ -11,14 +11,13 @@ require('dotenv').config({silent: true});
 var app = express();
 
 //environment variables
-//TODO add .env
 var env = process.env.NODE_ENV || 'development';
 app.locals.ENV = env;
 app.locals.ENV_DEVELOPMENT = env == 'development';
 
-if(process.env.USE_DB){
+if(process.env.USE_DB == true){
   require('./server/db.connect');
-  if(process.env.SEED_DB){
+  if(process.env.SEED_DB == true){
     require('./server/seed');
   }
 }
